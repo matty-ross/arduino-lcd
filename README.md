@@ -5,6 +5,8 @@
 
 A fun project to create the smallest possible code to fully take advantage of the HD44780U LCD.
 
+Inspired by Ben Eater's video: [Connecting an LCD to our computer — 6502 part 4](https://youtu.be/FY3zTUaykVo)
+
 
 ## Datasheet
 [https://www.sparkfun.com/datasheets/LCD/HD44780.pdf](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
