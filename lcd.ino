@@ -15,10 +15,6 @@
 // https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
 
 
-#define DELAY 100 // ms
-#define MESSAGE "Hello, world!"
-
-
 enum class CursorMoveDirection : uint8_t
 {
   Decrement = 0,
@@ -80,67 +76,81 @@ enum class CharacterFont : uint8_t
 };
 
 
-inline void ClearDisplay()
+void ClearDisplay()
 {
+  PORTA = 0b00000000;
   PORTC = (1 << 0);
 
-  PORTA = 0b00000000;
   PORTA = 0b00000100;
   PORTA = 0b00000000;
+
+  delayMicroseconds(1500);
 }
 
-inline void ReturnHome()
+void ReturnHome()
 {
+  PORTA = 0b00000000;
   PORTC = (1 << 1);
-
-  PORTA = 0b00000000;
+  
   PORTA = 0b00000100;
   PORTA = 0b00000000;
+
+  delayMicroseconds(1600);
 }
 
-inline void EntryModeSet(CursorMoveDirection cursorMoveDirection, DisplayShift displayShift)
+void EntryModeSet(CursorMoveDirection cursorMoveDirection, DisplayShift displayShift)
 {
+  PORTA = 0b00000000;
   PORTC = (1 << 2) | ((uint8_t)cursorMoveDirection << 1) | ((uint8_t)displayShift << 0);
-
-  PORTA = 0b00000000;
+  
   PORTA = 0b00000100;
   PORTA = 0b00000000;
+
+  delayMicroseconds(50);
 }
 
-inline void DisplayOnOffControl(Display display, Cursor cursor, BlinkCursor blinkCursor)
+void DisplayOnOffControl(Display display, Cursor cursor, BlinkCursor blinkCursor)
 {
+  PORTA = 0b00000000;
   PORTC = (1 << 3) | ((uint8_t)display << 2) | ((uint8_t)cursor << 1) | ((uint8_t)blinkCursor << 0);
-
-  PORTA = 0b00000000;
+  
   PORTA = 0b00000100;
   PORTA = 0b00000000;
+
+  delayMicroseconds(50);
 }
 
-inline void CursorOrDisplayShift(ShiftMode shiftMode, ShiftDirection shiftDirection)
+void CursorOrDisplayShift(ShiftMode shiftMode, ShiftDirection shiftDirection)
 {
+  PORTA = 0b00000000;
   PORTC = (1 << 4) | ((uint8_t)shiftMode << 3) | ((uint8_t)shiftDirection << 2);
-
-  PORTA = 0b00000000;
+  
   PORTA = 0b00000100;
   PORTA = 0b00000000;
+
+  delayMicroseconds(50);
 }
 
-inline void FunctionSet(DataLength dataLength, Lines lines, CharacterFont characterFont)
+void FunctionSet(DataLength dataLength, Lines lines, CharacterFont characterFont)
 {
+  PORTA = 0b00000000;
   PORTC = (1 << 5) | ((uint8_t)dataLength << 4) | ((uint8_t)lines << 3) | ((uint8_t)characterFont << 2);
 
-  PORTA = 0b00000000;
   PORTA = 0b00000100;
   PORTA = 0b00000000;
+
+  delayMicroseconds(50);
 }
 
-inline void WriteData(uint8_t data)
+void WriteData(uint8_t data)
 {
+  PORTA = 0b00000001;
   PORTC = data;
 
-  PORTA = 0b00000001;
   PORTA = 0b00000101;
-  PORTA = 0b00000001;
+  PORTA = 0b00000000;
+
+  delayMicroseconds(50);
 }
 
 
@@ -148,32 +158,16 @@ void setup()
 {
   DDRA = 0b00000111;
   DDRC = 0b11111111;
-  delay(DELAY);
-
-  PORTA = 0b00000000;
-  PORTC = 0b00000000;
-  delay(DELAY);
+  delayMicroseconds(1000);
 
   ClearDisplay();
-  delay(DELAY);
-
   FunctionSet(DataLength::EightBits, Lines::OneLine, CharacterFont::FiveEight_Dots);
-  delay(DELAY);
-
   DisplayOnOffControl(Display::On, Cursor::Off, BlinkCursor::Off);
-  delay(DELAY);
-
   EntryModeSet(CursorMoveDirection::Increment, DisplayShift::Off);
-  delay(DELAY);
 
-  PORTA = 0b00000000;
-  PORTC = 0b00000000;
-  delay(DELAY);
-
-  for (int i = 0; i < sizeof(MESSAGE) - 1; ++i)
+  for (uint8_t data = 'A'; data <= 'Z'; ++data)
   {
-    WriteData(MESSAGE[i]);
-    delay(DELAY);
+    WriteData(data);
   }
 }
 
