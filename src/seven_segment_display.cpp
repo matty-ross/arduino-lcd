@@ -3,12 +3,6 @@
 
 
 /*
-      A  
-    F   B
-      G  
-    E   C
-      D   DP
-    
     A   = PORTC7
     B   = PORTC6
     C   = PORTC5
@@ -41,7 +35,7 @@ constexpr uint8_t k_Digits[] =
 };
 
 
-void DisplaDigit(uint8_t digit, uint8_t place, bool decimalPoint)
+void DisplayDigit(uint8_t digit, uint8_t place, bool decimalPoint)
 {
     constexpr int duration = 5;
     
@@ -59,9 +53,9 @@ int main()
     
     while (true)
     {
-        DisplaDigit(1, 1, false);
-        DisplaDigit(2, 2, false);
-        DisplaDigit(3, 3, true);
-        DisplaDigit(4, 4, false);
+        DisplayDigit(1, 1, false);
+        DisplayDigit(2, 2, false);
+        DisplayDigit(3, 3, true);
+        DisplayDigit(4, 4, false);
     }
 }
