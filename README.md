@@ -45,14 +45,14 @@ F   B
 E   C
   D   DP
 ```
-- `A  = PORTC7`
-- `B  = PORTC6`
-- `C  = PORTC5`
-- `D  = PORTC4`
-- `E  = PORTC3`
-- `F  = PORTC2`
-- `G  = PORTC1`
-- `DP = PORTC0`
+- `A   = PORTC7`
+- `B   = PORTC6`
+- `C   = PORTC5`
+- `D   = PORTC4`
+- `E   = PORTC3`
+- `F   = PORTC2`
+- `G   = PORTC1`
+- `DP  = PORTC0`
 - `1st = PORTA0`
 - `2nd = PORTA1`
 - `3rd = PORTA2`
